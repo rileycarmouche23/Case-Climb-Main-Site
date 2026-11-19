@@ -305,7 +305,7 @@ html:not(.is-3d) .side-r .ui{align-self:flex-start}
     <img class="brand-mark" src="assets/icon.webp" alt="" width="42" height="42">
     <span class="brand-word"><img class="w-dark" src="assets/wordmark.webp" alt="Case Climb" width="306" height="80"><img class="w-light" src="assets/wordmark-light.webp" alt="" width="306" height="80"></span>
   </a>
-  <a class="cta cta--small" href="#summit" data-demo>Book a demo</a>
+  <a class="cta cta--small" href="book/" data-demo>Book a demo</a>
 </header>
 
 <nav class="rail" id="rail" aria-label="Stages of the climb"></nav>
@@ -325,7 +325,7 @@ html:not(.is-3d) .side-r .ui{align-self:flex-start}
         <h1 class="display"><span class="ln"><span>More signed</span></span><span class="ln"><span>cases for your</span></span><span class="ln"><span>law firm.</span></span></h1>
         <div class="hero-side reveal">
           <p class="lede">Case Climb gets your firm found, answers every call and message in seconds, and fills your calendar with consultations.</p>
-          <div class="actions"><a class="cta" href="#summit" data-demo>Book a demo</a><span class="note mono">Plans from $297 a month</span></div>
+          <div class="actions"><a class="cta" href="book/" data-demo>Book a demo</a><span class="note mono">Plans from $297 a month</span></div>
         </div>
       </div>
       <p class="cue mono" aria-hidden="true"><i></i>Scroll to climb</p>
@@ -445,7 +445,7 @@ html:not(.is-3d) .side-r .ui{align-self:flex-start}
         <h2 class="display"><span class="ln"><span>Take the top</span></span><span class="ln"><span>of your</span></span><span class="ln"><span>market.</span></span></h2></div>
         <div class="summit-row reveal">
           <p class="body">No setup fee. We build it and run it for you. Add more as your firm grows.</p>
-          <div class="actions"><a class="cta" href="#summit" data-demo data-final>Book a demo</a><span class="note mono">Plans from $297 a month</span></div>
+          <div class="actions"><a class="cta" href="book/" data-demo data-final>Book a demo</a><span class="note mono">Plans from $297 a month</span></div>
         </div>
       </div>
       <footer class="foot mono"><span>&copy; 2026 Case Climb</span><span>Grow your law practice. Win more cases.</span></footer>
@@ -463,7 +463,7 @@ window.CC_FILM = {"dir":"film/","ext":"webp","fps":12,"n":1232,"dur":102.583,"fo
   'use strict';
 
   /* Paste your booking link between the quotes. Every "Book a demo" button uses it. */
-  var DEMO_URL = '';
+  var DEMO_URL = 'book/';
 
   /* The film: frames exported at FILM.fps, numbered 0001.webp upward, in film/d (16:9) and film/m (portrait).
      `hold` is the stretch of film, in seconds, that plays while each stage's copy is on screen;
@@ -486,7 +486,7 @@ window.CC_FILM = {"dir":"film/","ext":"webp","fps":12,"n":1232,"dur":102.583,"fo
 
   /* ---------- links ---------- */
   $$('[data-demo]').forEach(function (a) {
-    if (DEMO_URL) { a.href = DEMO_URL; a.target = '_blank'; a.rel = 'noopener'; a.removeAttribute('data-demo'); }
+    if (DEMO_URL) { a.href = DEMO_URL; if (/^https?:/.test(DEMO_URL)) { a.target = '_blank'; a.rel = 'noopener'; } a.removeAttribute('data-demo'); }
   });
   function docMax() { return Math.max(1, document.documentElement.scrollHeight - window.innerHeight); }
   function readY(s) { return s.i === STAGES.length - 1 ? s.top + (docMax() - s.top) * 0.8 : s.i === 0 ? 0 : s.top + s.h * s.pin * 0.45; }
