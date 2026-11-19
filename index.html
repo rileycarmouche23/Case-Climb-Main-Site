@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Case Climb | More signed cases for your law firm</title>
+<meta name="description" content="Case Climb helps law firms sign more cases. Get found online, reply to every new lead in seconds, and fill your calendar with consultations. Plans from $297 a month.">
+<meta property="og:title" content="Case Climb | More signed cases for your law firm">
+<meta property="og:description" content="Get found online, reply to every new lead in seconds, and fill your calendar with consultations. Plans from $297 a month.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="assets/share.jpg">
+<meta name="theme-color" content="#0b0e13">
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script>
+/* Decide before first paint: the scroll-driven film, or the still version (reduced motion). */
+(function(){try{var c=document.createElement('canvas'),ok=!!(c.getContext&&c.getContext('2d'));
+if(ok&&!matchMedia('(prefers-reduced-motion: reduce)').matches)document.documentElement.className='is-3d is-loading';}catch(e){}})();
+</script>
+<style>
+/* Case Climb — the ascent.
+   Layout idea: one continuous film of the climb is the page; scroll plays it.
+   Each stage pins one block of copy to a lower corner while the film keeps moving behind it. */
+:root{
+  color-scheme:light;
+  --snow:#f3f5f7;
+  --ink:#0c0d10;
+  --stone:#7b828b;
+  --char:#22252a;
+  --red:#e3261c;
+  --red-deep:#c21b12;
+  --display:"Archivo","Archivo Black","Arial Black",system-ui,sans-serif;
+  --body:"Archivo","Helvetica Neue",Helvetica,Arial,sans-serif;
+  --mono:"Geist Mono","DM Mono",ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
+  --fg:var(--ink);
+  --fg-soft:rgba(12,13,16,.70);
+  --hair:rgba(12,13,16,.28);
+  --halo:rgba(243,245,247,.62);
+  --gut:clamp(18px,3.4vw,60px);
+  --nav-h:76px;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:#0b0e13;color:var(--ink);font-family:var(--body);font-size:1.0625rem;line-height:1.5;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+h1,h2,h3,p,ul,ol,dl,dd,dt{margin:0;padding:0}
+ul,ol{list-style:none}
+img{max-width:100%;display:block}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--red);outline-offset:3px}
+.mono{font-family:var(--mono);font-size:.72rem;letter-spacing:.07em;text-transform:uppercase;font-weight:500;line-height:1.3}
+
+/* dark sky: the summit */
+.dark,html:not(.is-3d) .stage--camp .copy,html:not(.is-3d) .hero-copy{--fg:#fff;--fg-soft:rgba(255,255,255,.82);--hair:rgba(255,255,255,.38);--halo:rgba(6,9,15,.44)}
+
+#scene{position:fixed;top:0;left:0;width:100%;height:100vh;height:100lvh;display:block;z-index:0}
+main{position:relative;z-index:1;overflow-x:clip}
+
+/* ---------- type ---------- */
+.display{font-family:var(--display);font-weight:800;font-stretch:106%;letter-spacing:-.038em;line-height:.9;color:var(--fg);transition:color .5s ease}
+.display .ln{display:block;overflow:hidden;padding-block:.06em .1em;margin-block:-.06em -.1em}
+.display .ln>span{display:inline-block;white-space:nowrap}
+h1.display{font-size:clamp(2.4rem,5.3vw,6.2rem)}
+h2.display{font-size:clamp(2.2rem,5.7vw,6.3rem)}
+.stage--summit h2.display{font-size:clamp(2.6rem,6.5vw,7.6rem)}
+.lede,.body{font-size:clamp(1rem,1.22vw,1.22rem);line-height:1.42;color:var(--fg);max-width:27em;font-weight:450;text-wrap:pretty}
+.tag{display:flex;align-items:center;gap:14px;color:var(--fg);margin-bottom:clamp(14px,2.2vh,26px)}
+.tag span:first-child{display:inline-flex;align-items:center;gap:10px}
+.tag span:first-child::before{content:"";width:7px;height:7px;background:var(--red);border-radius:50%}
+.tag [data-alt]{color:var(--fg-soft)}
+.tag [data-alt]:empty{display:none}
+
+/* ---------- buttons ---------- */
+.cta{display:inline-flex;align-items:center;justify-content:center;font-family:var(--body);font-weight:650;font-stretch:104%;font-size:1.02rem;letter-spacing:-.005em;text-decoration:none;padding:.92em 1.7em;border-radius:999px;background:var(--red);color:#fff;transition:background .2s ease,transform .25s cubic-bezier(.2,.8,.2,1);white-space:nowrap}
+.cta:hover{background:var(--red-deep);transform:translateY(-2px)}
+.cta:active{transform:none}
+.cta--small{font-size:.9rem;padding:.7em 1.25em}
+.actions{display:flex;flex-wrap:wrap;align-items:center;gap:14px 20px}
+.note{color:var(--fg-soft)}
+
+/* ---------- nav ---------- */
+.nav{position:fixed;z-index:20;top:0;left:0;right:0;height:var(--nav-h);padding-inline:var(--gut);display:flex;align-items:center;justify-content:space-between;gap:20px;pointer-events:none}
+.nav>*{pointer-events:auto}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none}
+.brand-mark{width:42px;height:42px;border-radius:50%;background:#fff}
+.brand-word{position:relative;display:block;height:24px;aspect-ratio:306/80}
+.brand-word img{position:absolute;inset:0;height:100%;width:auto;transition:opacity .5s ease}
+.w-dark{opacity:0}
+body.nav-ink .w-dark{opacity:1}
+body.nav-ink .w-light{opacity:0}
+
+/* ---------- loader ---------- */
+.loader{display:none}
+.is-3d .loader{position:fixed;inset:0;z-index:100;background:#0b0e13;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;color:#fff;transition:opacity .9s ease .1s,visibility 0s linear 1s}
+.is-3d:not(.is-loading) .loader{opacity:0;visibility:hidden;pointer-events:none}
+.loader img{width:64px;height:64px;border-radius:50%;background:#fff}
+.loader p{display:flex;gap:18px}
+.loader p span:last-child{min-width:3.2em;text-align:right;font-variant-numeric:tabular-nums}
+.loader-bar{width:min(240px,50vw);height:1px;background:rgba(255,255,255,.22)}
+.loader-bar i{display:block;height:100%;width:0;background:var(--red)}
+
+/* ---------- stages (film) ---------- */
+.stage{position:relative}
+.plate{position:relative;padding:calc(var(--nav-h) + 24px) var(--gut) clamp(64px,9vh,96px);display:flex;flex-direction:column;justify-content:flex-end}
+.is-3d .stage{height:170vh}
+.is-3d .stage--base{height:150vh}
+.is-3d .stage--areas{height:170vh}
+.is-3d .stage--system{height:290vh}
+.is-3d .stage--summit{height:390vh}
+.is-3d .plate{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden}
+
+.copy,.hero-copy,.summit-copy,.areas-wrap{position:relative}
+.copy,.hero-copy{transition:color .5s ease}
+.copy.dark .display,.hero-copy.dark .display,.copy.dark .body,.copy.dark .lede,.copy.dark .tag,.copy.dark .beats p{transition:color .5s ease}
+.copy{width:min(46rem,100%)}
+.side-r .copy{align-self:flex-end}
+/* a soft scrim behind each block of copy, so type stays readable over rock and snow without hiding the film */
+.copy::before,.hero-copy::before{content:"";position:absolute;inset:-34% -30% -46% -34%;z-index:-1;pointer-events:none;background:radial-gradient(closest-side,var(--halo) 30%,transparent);opacity:0;transition:opacity 1.2s ease}
+.is-on .copy::before,.is-on .hero-copy::before,html:not(.is-3d) .copy::before,html:not(.is-3d) .hero-copy::before{opacity:1}
+.stage--camp .copy{width:min(38rem,100%)}
+.copy .body{margin-top:clamp(14px,2.2vh,24px)}
+
+.hero-copy{width:min(58rem,62%);display:flex;flex-direction:column;gap:clamp(18px,3vh,30px)}
+.hero-side{display:flex;flex-direction:column;gap:22px}
+.cue{position:absolute;right:var(--gut);bottom:26px;display:flex;align-items:center;gap:12px;color:#fff}
+.cue i{width:1px;height:34px;background:currentColor;transform-origin:top;animation:cue 2.2s cubic-bezier(.6,0,.3,1) infinite}
+@keyframes cue{0%{transform:scaleY(0)}55%{transform:scaleY(1)}100%{transform:scaleY(1);opacity:0}}
+
+/* reveal: lines rise out of their own baseline while the letterforms widen */
+.is-3d .display .ln>span{transform:translate3d(0,112%,0);font-stretch:68%;transition:transform 1.05s cubic-bezier(.19,.82,.2,1),font-stretch 1.25s cubic-bezier(.19,.82,.2,1)}
+.is-3d .display .ln:nth-child(2)>span{transition-delay:.07s}
+.is-3d .display .ln:nth-child(3)>span{transition-delay:.14s}
+.is-3d .is-on .display .ln>span{transform:none;font-stretch:106%}
+.is-3d .tag,.is-3d .body,.is-3d .reveal,.is-3d .ui,.is-3d .beats,.is-3d .rig,.is-3d .foot,.is-3d .cue{opacity:0;transition:opacity .7s ease}
+.is-3d .is-on .tag,.is-3d .is-on .body,.is-3d .is-on .reveal,.is-3d .is-on .ui,.is-3d .is-on .beats,.is-3d .is-on .rig,.is-3d .is-on .foot,.is-3d .is-on .cue{opacity:1;transition-delay:.25s}
+.is-3d .stage:not(.is-on) .plate{pointer-events:none}
+.fit-measure .display .ln>span{font-stretch:106% !important;transition:none !important}
+
+/* ---------- glass interface pieces ---------- */
+.glass{background:rgba(255,255,255,.60);-webkit-backdrop-filter:blur(16px) saturate(1.15);backdrop-filter:blur(16px) saturate(1.15);border:1px solid rgba(255,255,255,.75);border-radius:18px;box-shadow:0 1px 0 rgba(255,255,255,.9) inset,0 34px 60px -34px rgba(8,12,22,.55),0 10px 22px -14px rgba(8,12,22,.35);color:var(--ink)}
+.ui{position:absolute;bottom:clamp(74px,12vh,130px);width:min(330px,74vw);padding:14px;display:flex;flex-direction:column;gap:10px;font-size:.98rem;line-height:1.3;transform:perspective(1100px) rotateY(var(--tilt,-14deg)) rotateX(6deg) translate3d(var(--px,0px),var(--py,0px),0);transform-origin:center}
+.side-l .ui{right:calc(var(--gut) + 8vw);--tilt:-15deg}
+.side-r .ui{left:calc(var(--gut) + 3vw);--tilt:15deg}
+.stars{color:#f0a31c;letter-spacing:2px}
+.rank{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:11px;background:#fff;font-weight:650}
+.rank i{font-style:normal;width:24px;height:24px;border-radius:50%;background:var(--red);color:#fff;display:grid;place-items:center;font-size:.8rem;flex:none}
+.rank .stars{margin-left:auto;font-size:.9rem}
+.rank.ghost{background:rgba(255,255,255,.5);height:44px}
+.rank.ghost i{background:#c9cdd4}
+.rank.ghost::after{content:"";height:8px;width:42%;border-radius:4px;background:#d6d9de}
+.rank.ghost+.rank.ghost{opacity:.6}
+.ad,.call,.done,.review{background:#fff;border-radius:11px;padding:13px 14px;display:flex;align-items:center;gap:12px}
+.ad b,.call b{display:block;font-weight:650;line-height:1.2}
+.ad span{font-size:.8rem;color:var(--stone)}
+.ad em{font-style:normal;margin-left:auto;background:var(--red);color:#fff;font-weight:650;font-size:.84rem;padding:7px 14px;border-radius:8px}
+.call i,.done i,.dot{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;flex:none;background:#1f9d55}
+.call i{width:38px;height:38px;background:var(--red)}
+.done{font-weight:650}
+.wave{display:flex;align-items:center;gap:3px;height:26px;margin-left:auto}
+.wave s{width:3px;border-radius:2px;background:var(--red);animation:wave 1.1s ease-in-out infinite}
+.wave s:nth-child(1){height:30%}.wave s:nth-child(2){height:70%;animation-delay:.1s}.wave s:nth-child(3){height:100%;animation-delay:.2s}.wave s:nth-child(4){height:55%;animation-delay:.3s}.wave s:nth-child(5){height:85%;animation-delay:.4s}.wave s:nth-child(6){height:40%;animation-delay:.5s}
+@keyframes wave{50%{transform:scaleY(.35)}}
+.review{flex-direction:column;gap:6px;padding-block:22px}
+.review .stars{font-size:1.9rem}
+.review b{font-weight:650}
+
+/* ---------- practice areas, in the whiteout ---------- */
+.stage--areas .plate{justify-content:center}
+.areas-wrap{width:min(78rem,100%);margin-inline:auto}
+.areas{margin-top:clamp(22px,4vh,46px);columns:4 170px;column-gap:clamp(18px,3vw,44px);font-size:.78rem;color:var(--fg)}
+.areas li{padding:11px 0;border-top:1px solid var(--hair);break-inside:avoid}
+
+/* ---------- the system, above the clouds ---------- */
+.stage--system .copy{width:min(40rem,54%)}
+.beats{color:var(--fg);margin-top:clamp(18px,3vh,34px);display:flex;flex-direction:column;gap:clamp(10px,1.8vh,18px);max-width:26em}
+.beats li{padding-left:18px;border-left:2px solid var(--hair);transition:border-color .35s,opacity .35s}
+.beats h3{font-size:1.14rem;font-weight:700;letter-spacing:-.01em;font-stretch:104%}
+.beats p{color:var(--fg);margin-top:2px;font-size:1rem;line-height:1.4}
+.is-3d .beats li{opacity:.42}
+.is-3d .beats li.on{opacity:1;border-color:var(--red)}
+.rig{position:absolute;right:calc(var(--gut) + 10vw);top:50%;width:300px;height:610px;margin-top:-290px;perspective:1500px}
+.phone{position:absolute;inset:0;border-radius:50px;background:#0b0b0c;padding:11px;transform:rotateY(calc(-21deg + var(--ry,0deg))) rotateX(calc(7deg + var(--rx,0deg))) rotateZ(1.5deg);transform-style:preserve-3d;box-shadow:0 0 0 1px #2c2c2e inset,-2px 0 0 1px #3a3a3d,26px 60px 90px -30px rgba(6,10,20,.6),10px 22px 40px -18px rgba(6,10,20,.45)}
+.screen{position:relative;height:100%;border-radius:40px;background:#fff;overflow:hidden;display:flex;flex-direction:column;font-size:.82rem;line-height:1.3;color:var(--ink)}
+.screen::before{content:"";position:absolute;top:10px;left:50%;width:92px;height:27px;margin-left:-46px;border-radius:20px;background:#0b0b0c;z-index:2}
+.screen::after{content:"";position:absolute;inset:0;background:linear-gradient(115deg,rgba(255,255,255,.34),transparent 38%);pointer-events:none}
+.status{display:flex;justify-content:space-between;padding:15px 26px 0;font-size:.76rem;font-weight:650}
+.thread-head{display:flex;flex-direction:column;align-items:center;gap:3px;padding:16px 0 8px;border-bottom:1px solid #ececef;font-size:.72rem}
+.avatar{width:38px;height:38px;border-radius:50%;background:linear-gradient(#a8abb3,#83868f);color:#fff;display:grid;place-items:center;font-weight:650;font-size:.85rem}
+.thread{flex:1;min-height:0;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;gap:6px;padding:10px 12px 12px}
+.stamp{align-self:center;color:#8e8e93;font-size:.68rem;margin-bottom:2px}
+.msg{max-width:80%;padding:7px 12px;border-radius:18px;transition:opacity .35s ease,transform .35s ease}
+.msg.them{align-self:flex-start;background:#e9e9eb;border-bottom-left-radius:5px}
+.msg.me{align-self:flex-end;background:#0a84ff;color:#fff;border-bottom-right-radius:5px}
+.is-3d .thread>*:not(.on){opacity:0;transform:translateY(10px)}
+.compose{margin:0 12px 16px;height:34px;border:1px solid #d6d6db;border-radius:18px;display:flex;align-items:center;padding-inline:14px;color:#b4b4ba;font-size:.82rem}
+.float{position:absolute;display:flex;align-items:center;gap:12px;padding:12px 16px 12px 12px;font-size:.92rem;line-height:1.25;white-space:nowrap;transition:opacity .5s ease,transform .7s cubic-bezier(.2,.8,.2,1)}
+.float b{display:block;font-weight:650}
+.float small{color:#565b63;font-size:.8rem}
+.dot--ink{background:var(--ink)}
+.dot--green{background:#1f9d55}
+.f-missed{left:-128px;top:92px;transform:translate3d(var(--fx,0px),var(--fy,0px),0)}
+.f-booked{right:-74px;bottom:108px;transform:translate3d(calc(var(--fx,0px) * -1.4),calc(var(--fy,0px) * -1.4),0)}
+.is-3d .float:not(.on){opacity:0;transform:translate3d(0,18px,0) scale(.96)}
+
+/* ---------- summit ---------- */
+.stage--summit .plate{justify-content:space-between;padding-top:calc(var(--nav-h) + clamp(18px,7vh,80px))}
+.summit-copy{display:contents}
+.summit-row{display:flex;flex-direction:column;align-items:flex-start;gap:20px}
+.summit-row .body{max-width:22em}
+.foot{position:absolute;right:var(--gut);bottom:24px;display:flex;justify-content:flex-end;gap:10px 28px;color:var(--fg-soft);flex-wrap:wrap}
+
+/* ---------- fixed instruments ---------- */
+.telemetry{position:fixed;z-index:9;left:var(--gut);bottom:24px;display:flex;gap:22px;color:#fff;transition:color .5s ease}
+.telemetry div{display:flex;gap:8px}
+.telemetry dt{opacity:.55}
+.telemetry dd{font-variant-numeric:tabular-nums;min-width:4.2em}
+.rail{position:fixed;z-index:9;right:calc(var(--gut) - 6px);top:50%;transform:translateY(-50%);display:flex;flex-direction:column;align-items:flex-end;gap:2px;color:#fff;transition:color .5s ease}
+.rail a{display:flex;align-items:center;justify-content:flex-end;gap:10px;height:26px;padding:0 6px;text-decoration:none;font-family:var(--mono);font-size:.66rem;letter-spacing:.08em;text-transform:uppercase}
+.rail a span{opacity:0;transform:translateX(6px);transition:opacity .3s,transform .3s}
+.rail a i{display:block;width:14px;height:1px;background:currentColor;opacity:.5;transition:width .35s cubic-bezier(.2,.8,.2,1),background .3s,opacity .3s}
+.rail a:hover span,.rail a:focus-visible span,.rail a.on span{opacity:1;transform:none}
+.rail a.on i{width:30px;background:var(--red);opacity:1;height:2px}
+body.hud-ink .telemetry,body.rail-ink .rail{color:var(--ink)}
+.grain{position:fixed;inset:0;z-index:2;pointer-events:none;background:radial-gradient(ellipse at 50% 42%,transparent 52%,rgba(4,6,10,.46) 100%)}
+.grain::after{content:"";position:absolute;inset:-60px;background-size:160px 160px;opacity:.11;mix-blend-mode:overlay;animation:grain .7s steps(5) infinite}
+@keyframes grain{0%{transform:translate(0,0)}20%{transform:translate(-22px,14px)}40%{transform:translate(18px,-26px)}60%{transform:translate(-30px,-8px)}80%{transform:translate(12px,24px)}100%{transform:translate(0,0)}}
+html:not(.is-3d) .grain{display:none}
+main{z-index:3}
+html:not(.is-3d) .telemetry,html:not(.is-3d) .rail,html:not(.is-3d) #scene,html:not(.is-3d) .cue{display:none}
+
+/* ---------- still version: reduced motion, or no canvas ---------- */
+html:not(.is-3d) .stage{min-height:100vh;display:flex;background:#141a22 center/cover no-repeat}
+html:not(.is-3d) .plate{flex:1;min-height:100vh;padding-block:calc(var(--nav-h) + 40px) 90px}
+html:not(.is-3d) .stage--base{background-image:url(assets/still-base.jpg);background-position:62% 50%}
+html:not(.is-3d) #found{background-image:url(assets/still-found.jpg);background-position:56% 50%}
+html:not(.is-3d) #reach{background-image:url(assets/still-reach.jpg);background-position:56% 50%}
+html:not(.is-3d) #answered{background-image:url(assets/still-answered.jpg)}
+html:not(.is-3d) #trusted{background-image:url(assets/still-trusted.jpg);background-position:54% 50%}
+html:not(.is-3d) .stage--areas{background-image:url(assets/still-cloud.jpg);background-position:43% 50%}
+html:not(.is-3d) .stage--system{background-image:url(assets/still-above.jpg)}
+html:not(.is-3d) .stage--summit{background-image:url(assets/still-summit.jpg)}
+html:not(.is-3d) .nav{position:absolute}
+html:not(.is-3d) .ui{position:relative;top:auto;bottom:auto;left:auto;right:auto;order:-1;margin-bottom:auto;align-self:flex-end}
+html:not(.is-3d) .side-r .ui{align-self:flex-start}
+
+/* ---------- small screens ---------- */
+@media (max-width:860px){
+  :root{--nav-h:64px}
+  .brand-mark{width:36px;height:36px}
+  .brand-word{height:20px}
+  .hero-copy{width:100%;gap:16px;flex:1;justify-content:space-between}
+  .hero-copy::before{inset:calc(-1 * var(--nav-h) - 24px) calc(-1 * var(--gut)) -58px;background:linear-gradient(to bottom,rgba(6,9,15,.5),transparent 34%,transparent 54%,rgba(6,9,15,.7) 86%)}
+  .hero-side{gap:16px}
+  .cue,.rail{display:none}
+  .telemetry{bottom:16px;gap:16px}
+  .plate{padding-bottom:58px}
+  .copy,.stage--system .copy,.stage--camp .copy{width:100%}
+  :root{--halo:rgba(243,245,247,.74)}
+  .dark{--halo:rgba(6,9,15,.58)}
+  .copy::before,.hero-copy::before{inset:-30% -40% -70% -40%}
+  .side-r .copy{align-self:flex-start}
+  .ui{position:relative;bottom:auto;right:auto;left:auto;order:-1;align-self:flex-start;margin-bottom:20px;width:min(244px,66vw);font-size:.84rem;padding:8px;gap:7px;border-radius:15px;transform-origin:left center}
+  .side-l .ui{right:auto;--tilt:9deg}
+  .ui .rank,.ui .ad,.ui .call,.ui .done{padding:9px 11px}
+  .rank.ghost{height:32px}
+  .rank.ghost+.rank.ghost{display:none}
+  .review{padding-block:14px}
+  .review .stars{font-size:1.5rem}
+  .areas{columns:2;font-size:.68rem}
+  .areas li{padding:7px 0}
+  .rig{right:50%;margin-right:-150px;top:calc(var(--nav-h) + 4px);margin-top:0;transform:scale(.5);transform-origin:top center}
+  .is-3d .beats li:not(.on){display:none}
+  .f-missed{left:-70px}
+  .f-booked{right:-50px}
+  .foot{bottom:42px;left:var(--gut);justify-content:flex-start;flex-direction:column;gap:3px;font-size:.62rem}
+  .stage--summit .plate{justify-content:flex-end;gap:18px;padding-bottom:108px}
+  .stage--summit .plate::before{content:"";position:absolute;inset:34% 0 0;background:linear-gradient(to top,rgba(6,9,15,.86) 34%,transparent);pointer-events:none;opacity:0;transition:opacity 1s ease}
+  .stage--summit.is-on .plate::before,html:not(.is-3d) .stage--summit .plate::before{opacity:1}
+  .summit-head,.summit-row{position:relative}
+  .summit-row{gap:14px}
+  html:not(.is-3d) .rig{position:relative;right:auto;margin:0 auto 24px;transform:none;top:auto}
+}
+@media (max-width:860px) and (max-height:700px){
+  .rig{transform:scale(.42)}
+}
+@media (prefers-reduced-motion:reduce){
+  .wave s,.cue i,.grain::after{animation:none}
+  .cta{transition:none}
+}
+</style>
+</head>
+<body>
+
+<canvas id="scene" aria-hidden="true"></canvas>
+
+<div class="loader" id="loader" role="status">
+  <img src="assets/icon.webp" alt="" width="64" height="64">
+  <p class="mono"><span>Loading the ascent</span><span id="load-pct">0%</span></p>
+  <div class="loader-bar"><i id="load-bar"></i></div>
+</div>
+
+<header class="nav">
+  <a class="brand" href="#base" aria-label="Case Climb, back to the base">
+    <img class="brand-mark" src="assets/icon.webp" alt="" width="42" height="42">
+    <span class="brand-word"><img class="w-dark" src="assets/wordmark.webp" alt="Case Climb" width="306" height="80"><img class="w-light" src="assets/wordmark-light.webp" alt="" width="306" height="80"></span>
+  </a>
+  <a class="cta cta--small" href="#summit" data-demo>Book a demo</a>
+</header>
+
+<nav class="rail" id="rail" aria-label="Stages of the climb"></nav>
+
+<dl class="telemetry mono" id="telemetry" aria-hidden="true">
+  <div><dt>Alt</dt><dd id="hud-alt">5,300 m</dd></div>
+  <div><dt>Ascent</dt><dd id="hud-pct">0%</dd></div>
+</dl>
+
+<div class="grain" aria-hidden="true"></div>
+
+<main>
+
+  <section class="stage stage--base" id="base" data-stage="base">
+    <div class="plate">
+      <div class="hero-copy">
+        <h1 class="display"><span class="ln"><span>More signed</span></span><span class="ln"><span>cases for your</span></span><span class="ln"><span>law firm.</span></span></h1>
+        <div class="hero-side reveal">
+          <p class="lede">Case Climb gets your firm found, answers every call and message in seconds, and fills your calendar with consultations.</p>
+          <div class="actions"><a class="cta" href="#summit" data-demo>Book a demo</a><span class="note mono">Plans from $297 a month</span></div>
+        </div>
+      </div>
+      <p class="cue mono" aria-hidden="true"><i></i>Scroll to climb</p>
+    </div>
+  </section>
+
+  <section class="stage stage--camp side-l" id="found" data-stage="found">
+    <div class="plate">
+      <div class="copy">
+        <p class="tag mono"><span>Camp 1</span><span data-alt></span></p>
+        <h2 class="display"><span class="ln"><span>Be the firm</span></span><span class="ln"><span>they find.</span></span></h2>
+        <p class="body reveal">A site built to rank on Google and get recommended by AI search when someone nearby needs a lawyer.</p>
+      </div>
+      <div class="ui glass" aria-hidden="true">
+        <div class="rank"><i>1</i><b>Your Law Firm</b><span class="stars">★★★★★</span></div>
+        <div class="rank ghost"><i>2</i></div>
+        <div class="rank ghost"><i>3</i></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="stage stage--camp side-l" id="reach" data-stage="reach">
+    <div class="plate">
+      <div class="copy">
+        <p class="tag mono"><span>Camp 2</span><span data-alt></span></p>
+        <h2 class="display"><span class="ln"><span>Turn ad spend</span></span><span class="ln"><span>into cases.</span></span></h2>
+        <p class="body reveal">Ads reach people who need a lawyer today, and every lead is followed up the moment it comes in.</p>
+      </div>
+      <div class="ui glass" aria-hidden="true">
+        <div class="ad"><img src="assets/icon.webp" alt="" width="34" height="34"><div><b>Your Law Firm</b><span>Sponsored</span></div><em>Get help</em></div>
+        <div class="done"><i><svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5l3.2 3.2L13 5"/></svg></i>New lead</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="stage stage--camp side-l" id="answered" data-stage="answered">
+    <div class="plate">
+      <div class="copy">
+        <p class="tag mono"><span>Camp 3</span><span data-alt></span></p>
+        <h2 class="display"><span class="ln"><span>Never miss</span></span><span class="ln"><span>another call.</span></span></h2>
+        <p class="body reveal">Missed calls get a text back in seconds, and an AI agent can pick up day and night, answer questions, and book the consultation.</p>
+      </div>
+      <div class="ui glass" aria-hidden="true">
+        <div class="call"><i><svg width="17" height="17" viewBox="0 0 24 24" fill="#fff"><path d="M6.6 10.8a15.1 15.1 0 006.6 6.6l2.2-2.2a1 1 0 011-.25 11.4 11.4 0 003.6.57 1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1 11.4 11.4 0 00.57 3.6 1 1 0 01-.25 1z"/></svg></i><b>Call answered</b><span class="wave"><s></s><s></s><s></s><s></s><s></s><s></s></span></div>
+        <div class="done"><i><svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5l3.2 3.2L13 5"/></svg></i>Consultation booked</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="stage stage--camp side-l" id="trusted" data-stage="trusted">
+    <div class="plate">
+      <div class="copy">
+        <p class="tag mono"><span>Camp 4</span><span data-alt></span></p>
+        <h2 class="display"><span class="ln"><span>Earn more</span></span><span class="ln"><span>five-star reviews.</span></span></h2>
+        <p class="body reveal">Clients are asked at the right moment, so your rating keeps climbing and the next person picks you.</p>
+      </div>
+      <div class="ui glass" aria-hidden="true">
+        <div class="review"><span class="stars">★★★★★</span><b>New 5-star review</b></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="stage stage--areas" id="practice-areas" data-stage="areas">
+    <div class="plate">
+      <div class="areas-wrap">
+        <p class="tag mono"><span>In the cloud</span><span data-alt></span></p>
+        <h2 class="display"><span class="ln"><span>Works for every</span></span><span class="ln"><span>practice area.</span></span></h2>
+        <ul class="areas mono reveal">
+          <li>Personal injury</li><li>Criminal defense</li><li>DUI and traffic</li><li>Immigration</li><li>Family law</li><li>Divorce</li>
+          <li>Child custody</li><li>Estate planning</li><li>Probate</li><li>Elder law</li><li>Bankruptcy</li><li>Employment law</li>
+          <li>Workers' compensation</li><li>Social Security disability</li><li>Medical malpractice</li><li>Wrongful death</li><li>Mass torts</li><li>Business law</li>
+          <li>Real estate</li><li>Landlord and tenant</li><li>Tax law</li><li>Intellectual property</li><li>Civil litigation</li><li>Civil rights</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="stage stage--system" id="system" data-stage="system">
+    <div class="plate">
+      <div class="copy">
+        <p class="tag mono"><span>Above the clouds</span><span data-alt></span></p>
+        <h2 class="display"><span class="ln"><span>The first firm</span></span><span class="ln"><span>to answer gets</span></span><span class="ln"><span>the case.</span></span></h2>
+        <ol class="beats" id="beats">
+          <li class="on"><h3>A lead calls after hours</h3><p>Nobody is at the front desk. Normally that call is gone.</p></li>
+          <li><h3>They get a reply in seconds</h3><p>Case Climb texts back, asks the right questions, and keeps them talking to you.</p></li>
+          <li><h3>The consultation is booked</h3><p>It lands on your calendar. You show up and sign the case.</p></li>
+        </ol>
+      </div>
+      <div class="rig" id="rig">
+        <div class="phone" role="img" aria-label="Example text conversation: a missed call at 9:42 PM is answered by text within a minute, and the lead books a consultation for 10:30 the next morning.">
+          <div class="screen" aria-hidden="true">
+            <div class="status"><span>9:42</span><span>5G</span></div>
+            <div class="thread-head"><span class="avatar">LF</span><span>Your Law Firm</span></div>
+            <div class="thread" id="thread">
+              <span class="stamp on">Today 9:42 PM</span>
+              <p class="msg them on">Hi, this is Your Law Firm. Sorry we missed your call. How can we help?</p>
+              <p class="msg me">I was rear-ended yesterday. Their insurance keeps calling me.</p>
+              <p class="msg them">I'm sorry that happened. Were you hurt?</p>
+              <p class="msg me">Yes, neck and back.</p>
+              <p class="msg them">An attorney can call you tomorrow, free of charge. Does 10:30 AM work?</p>
+              <p class="msg me">Yes</p>
+              <p class="msg them">You're booked for 10:30 AM tomorrow.</p>
+            </div>
+            <div class="compose">Text Message</div>
+          </div>
+        </div>
+        <div class="float glass f-missed" aria-hidden="true"><i class="dot dot--ink"><svg width="14" height="14" viewBox="0 0 24 24" fill="#fff"><path d="M6.6 10.8a15.1 15.1 0 006.6 6.6l2.2-2.2a1 1 0 011-.25 11.4 11.4 0 003.6.57 1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1 11.4 11.4 0 00.57 3.6 1 1 0 01-.25 1z"/></svg></i><span><b>Missed call</b><small>9:42 PM, office closed</small></span></div>
+        <div class="float glass f-booked" aria-hidden="true"><i class="dot dot--green"><svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5l3.2 3.2L13 5"/></svg></i><span><b>Consultation booked</b><small>Tomorrow, 10:30 AM</small></span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="stage stage--summit dark" id="summit" data-stage="summit">
+    <div class="plate">
+      <div class="summit-copy">
+        <div class="summit-head"><p class="tag mono"><span>Summit</span><span data-alt></span></p>
+        <h2 class="display"><span class="ln"><span>Take the top</span></span><span class="ln"><span>of your</span></span><span class="ln"><span>market.</span></span></h2></div>
+        <div class="summit-row reveal">
+          <p class="body">No setup fee. We build it and run it for you. Add more as your firm grows.</p>
+          <div class="actions"><a class="cta" href="#summit" data-demo data-final>Book a demo</a><span class="note mono">Plans from $297 a month</span></div>
+        </div>
+      </div>
+      <footer class="foot mono"><span>&copy; 2026 Case Climb</span><span>Grow your law practice. Win more cases.</span></footer>
+    </div>
+  </section>
+
+</main>
+
+<script>
+window.CC_FILM = {"dir":"film/","ext":"webp","fps":12,"n":1232,"dur":102.583,"focus":[[0,0.62],[2,0.61],[4,0.58],[6,0.5],[8,0.52],[10,0.56],[12,0.56],[14,0.58],[16,0.57],[18,0.57],[20,0.57],[22,0.54],[24,0.58],[26,0.61],[28,0.6],[30,0.44],[32,0.52],[34,0.49],[36,0.49],[38,0.53],[40,0.53],[42,0.54],[44,0.55],[46,0.52],[48,0.5],[49.75,0.5],[51.75,0.43],[53.75,0.43],[55.75,0.45],[57.75,0.47],[59.75,0.48],[61.75,0.5],[66.7,0.5],[67.7,0.42],[68.7,0.36],[69.7,0.34],[70.7,0.28],[71.7,0.38],[72.7,0.42],[73.7,0.44],[74.7,0.52],[75.7,0.5],[90.7,0.49],[92.7,0.49],[94.7,0.47],[96.7,0.5],[98.7,0.52],[102.7,0.53]],"snow":[[0,1],[46,1],[57,0.9],[61.5,0.3],[76,0.22],[92,0.1]],"stages":{"base":{"hold":[0,2.6],"alt":5300},"found":{"hold":[9,12.5],"alt":5900},"reach":{"hold":[21.5,25],"alt":6400},"answered":{"hold":[30,33.6],"alt":6900},"trusted":{"hold":[38.5,43],"alt":7300},"areas":{"hold":[48.5,52.3],"alt":7600},"system":{"hold":[58,67],"alt":7850},"summit":{"hold":[97.6,102.583],"win0":0.6,"alt":8040}}};
+</script>
+<script>
+/* Case Climb — the ascent. One continuous film of the climb, played by scroll. */
+(function () {
+  'use strict';
+
+  /* Paste your booking link between the quotes. Every "Book a demo" button uses it. */
+  var DEMO_URL = '';
+
+  /* The film: frames exported at FILM.fps, numbered 0001.webp upward, in film/d (16:9) and film/m (portrait).
+     `hold` is the stretch of film, in seconds, that plays while each stage's copy is on screen;
+     the film between one hold and the next plays as the visitor scrolls on. */
+  var FILM = window.CC_FILM;
+
+  var root = document.documentElement, body = document.body;
+  function $(s, el) { return (el || document).querySelector(s); }
+  function $$(s, el) { return Array.prototype.slice.call((el || document).querySelectorAll(s)); }
+  function clamp(x, a, b) { return x < a ? a : x > b ? b : x; }
+  function lerp(a, b, t) { return a + (b - a) * t; }
+  function smooth(a, b, x) { var t = clamp((x - a) / (b - a), 0, 1); return t * t * (3 - 2 * t); }
+  function fmt(n) { return Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','); }
+  function pad(n, w) { var s = String(n); while (s.length < w) s = '0' + s; return s; }
+
+  var OPT = window.__ccOpts || {};
+  var live = root.classList.contains('is-3d');
+  var STAGES = $$('[data-stage]').map(function (el, i) { return { el: el, i: i, id: el.getAttribute('data-stage'), plate: $('.plate', el), copy: $('.copy, .hero-copy, .summit-copy, .areas-wrap', el), on: null }; });
+  var byId = {}; STAGES.forEach(function (s) { byId[s.id] = s; });
+
+  /* ---------- links ---------- */
+  $$('[data-demo]').forEach(function (a) {
+    if (DEMO_URL) { a.href = DEMO_URL; a.target = '_blank'; a.rel = 'noopener'; a.removeAttribute('data-demo'); }
+  });
+  function docMax() { return Math.max(1, document.documentElement.scrollHeight - window.innerHeight); }
+  function readY(s) { return s.i === STAGES.length - 1 ? s.top + (docMax() - s.top) * 0.8 : s.i === 0 ? 0 : s.top + s.h * s.pin * 0.45; }
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest && e.target.closest('a[href^="#"]'); if (!a) return;
+    var el = document.getElementById(a.getAttribute('href').slice(1)); if (!el) return;
+    var s = byId[el.getAttribute('data-stage')]; if (!s) return;
+    e.preventDefault();
+    measure();
+    if (a.hasAttribute('data-final') && s.on) return;
+    window.scrollTo({ top: live ? readY(s) : s.top, behavior: 'smooth' });
+  });
+
+  /* ---------- headline fitting: no display line ever overflows its column ---------- */
+  function fit() {
+    root.classList.add('fit-measure');
+    $$('.display').forEach(function (h) {
+      h.style.fontSize = '';
+      var avail = h.parentElement.clientWidth, w = 0;
+      $$('.ln > span', h).forEach(function (s) { w = Math.max(w, s.getBoundingClientRect().width); });
+      if (w > avail && avail > 0) h.style.fontSize = (parseFloat(getComputedStyle(h).fontSize) * avail / w * 0.985) + 'px';
+    });
+    root.classList.remove('fit-measure');
+  }
+
+  var vw = 1, vh = 1, canvas = $('#scene');
+  function measure() {
+    vw = window.innerWidth; vh = (live && canvas.clientHeight) || window.innerHeight;
+    var y = window.scrollY;
+    STAGES.forEach(function (s) { var r = s.el.getBoundingClientRect(); s.top = r.top + y; s.h = r.height; s.pin = Math.max(0.05, (r.height - s.plate.offsetHeight) / r.height); });
+  }
+
+  STAGES.forEach(function (s) { var a = $('[data-alt]', s.el), st = FILM && FILM.stages[s.id]; if (a && st) a.textContent = fmt(st.alt) + ' m'; });
+
+  if (!live || !FILM) { root.classList.remove('is-3d', 'is-loading'); live = false; fit(); window.addEventListener('resize', fit); if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit); return; }
+
+  /* =====================================================================
+     film
+     ===================================================================== */
+  var ctx = canvas.getContext('2d', { alpha: false });
+  var coarse = matchMedia('(pointer: coarse)').matches, small = matchMedia('(max-width: 860px)').matches;
+  function fallback() { live = false; root.classList.remove('is-3d', 'is-loading'); fit(); }
+  if (!ctx) { fallback(); return; }
+
+  /* rail */
+  var LABEL = { base: 'Base', found: 'Found', reach: 'Reach', answered: 'Answered', trusted: 'Trusted', areas: 'Every practice', system: 'The system', summit: 'Summit' };
+  var rail = $('#rail');
+  STAGES.forEach(function (s) {
+    var a = document.createElement('a'); a.href = '#' + s.el.id; a.innerHTML = '<span>' + LABEL[s.id] + '</span><i></i>'; rail.appendChild(a); s.railEl = a;
+    s.copy.classList.add('dark');             // the film is dark until measured otherwise
+  });
+
+  /* grain: a small noise tile, generated once */
+  (function () {
+    var g = document.createElement('canvas'), n = 160; g.width = g.height = n;
+    var c = g.getContext('2d'), d = c.createImageData(n, n), i;
+    for (i = 0; i < n * n; i++) { var v = Math.random() * 255; d.data[i * 4] = d.data[i * 4 + 1] = d.data[i * 4 + 2] = v; d.data[i * 4 + 3] = 255; }
+    c.putImageData(d, 0, 0);
+    var st = document.createElement('style'); st.textContent = '.grain::after{background-image:url(' + g.toDataURL('image/png') + ')}'; document.head.appendChild(st);
+  })();
+
+  /* ---------- frames: coarse first, then finer, always nearest to where the visitor is ---------- */
+  var N = FILM.n, portrait = false, imgs = [], st8 = new Uint8Array(N), tiers = [], inflight = 0, cur = 0, loadedCount = 0, generation = 0;
+  var STRIDES = [32, 16, 8, 4, 2, 1], PENALTY = [0, 14, 40, 90, 200, 420];
+  var KEEP = coarse ? 300 : 0;      // phones hold only this many frames around the playhead; the rest come back from the browser cache
+  function tierOf(i) { if (i === N - 1) return 0; for (var t = 0; t < STRIDES.length; t++) if (i % STRIDES[t] === 0) return t; return STRIDES.length - 1; }
+  function buildTiers() {
+    var seen = new Uint8Array(N); tiers = [];
+    STRIDES.forEach(function (s) { var t = []; for (var i = 0; i < N; i += s) if (!seen[i]) { seen[i] = 1; t.push(i); } if (!seen[N - 1]) { seen[N - 1] = 1; t.push(N - 1); } tiers.push(t); });
+  }
+  function src(i) { return FILM.dir + (portrait ? 'm/' : 'd/') + pad(i + 1, 4) + '.' + FILM.ext; }
+  function pump() {
+    var max = coarse ? 4 : 6;
+    while (inflight < max) {
+      var best = -1, bs = 1e9, bt = 0, bk = 0;
+      for (var t = 0; t < tiers.length; t++) {
+        var list = tiers[t];
+        for (var k = 0; k < list.length; k++) {
+          var dist = Math.abs(list[k] - cur); if (KEEP && t && dist > KEEP / 2) continue;
+          var sc = dist + PENALTY[t]; if (sc < bs) { bs = sc; best = list[k]; bt = t; bk = k; }
+        }
+      }
+      if (best < 0) return;
+      tiers[bt].splice(bk, 1);
+      load(best);
+    }
+  }
+  function load(i) {
+    var im = new Image(), g = generation; inflight++; st8[i] = 1; im.decoding = 'async';
+    im.onload = function () { if (g !== generation) return; inflight--; imgs[i] = im; st8[i] = 2; loadedCount++; dirty = true; pump(); };
+    im.onerror = function () { if (g !== generation) return; inflight--; st8[i] = 3; pump(); };
+    im.src = src(i);
+  }
+  function nearest(i) {
+    i = clamp(i, 0, N - 1); if (st8[i] === 2) return i;
+    for (var d = 1; d < 80; d++) { if (i - d >= 0 && st8[i - d] === 2) return i - d; if (i + d < N && st8[i + d] === 2) return i + d; }
+    return -1;
+  }
+  function prune() {
+    if (!KEEP || loadedCount < KEEP + 80) return;
+    for (var i = 0; i < N; i++) if (st8[i] === 2 && Math.abs(i - cur) > KEEP / 2 + 30) { var t = tierOf(i); if (!t) continue; imgs[i] = null; st8[i] = 0; loadedCount--; tiers[t].push(i); }
+  }
+  function resetFrames() {
+    generation++; imgs = []; st8 = new Uint8Array(N); inflight = 0; loadedCount = 0; warmAt = {}; buildTiers(); pump();
+  }
+  /* decode the frames just ahead of the playhead off the main thread, so drawing them never stalls a scroll */
+  var warmAt = {}, lastCur = 0;
+  function warm(now) {
+    var dir = cur >= lastCur ? 1 : -1; lastCur = cur;
+    for (var d = -2; d <= 9; d++) {
+      var k = cur + d * dir;
+      if (k < 0 || k >= N || st8[k] !== 2 || (warmAt[k] && now - warmAt[k] < 5000)) continue;
+      warmAt[k] = now;
+      if (imgs[k].decode) imgs[k].decode().catch(function () {});
+    }
+  }
+
+  /* ---------- scroll → film time ---------- */
+  var KEYS = [];
+  function buildKeys() {
+    KEYS = [];
+    STAGES.forEach(function (s) {
+      var f = FILM.stages[s.id], last = s.i === STAGES.length - 1;
+      s.win = [s.i === 0 ? -1 : f.win0 == null ? 0.02 : f.win0, last ? 2 : s.pin * 0.97];
+      KEYS.push({ j: s.i + Math.max(s.win[0], 0), t: f.hold[0], hold: true }, { j: s.i + Math.min(s.win[1], 1), t: f.hold[1] });
+    });
+  }
+  function filmTime(j) {
+    var n = KEYS.length, i = 0;
+    while (i < n - 2 && KEYS[i + 1].j <= j) i++;
+    var a = KEYS[i], b = KEYS[i + 1], t = clamp((j - a.j) / Math.max(b.j - a.j, 1e-5), 0, 1);
+    if (!a.hold) t = lerp(t, t * t * (3 - 2 * t), 0.55);          // travel eases out of one hold and into the next
+    return lerp(a.t, b.t, t);
+  }
+  function journey(y) {
+    var n = STAGES.length, i = 0;
+    while (i < n - 1 && STAGES[i + 1].top <= y) i++;
+    var s = STAGES[i], end = i < n - 1 ? STAGES[i + 1].top : Math.max(docMax(), s.top + 1);
+    return i + clamp((y - s.top) / (end - s.top), 0, 1);
+  }
+  function at(list, t) {            // piecewise-linear [[time, value], ...]
+    if (!list || !list.length) return 0.5;
+    if (t <= list[0][0]) return list[0][1];
+    for (var i = 1; i < list.length; i++) if (t <= list[i][0]) return lerp(list[i - 1][1], list[i][1], (t - list[i - 1][0]) / (list[i][0] - list[i - 1][0]));
+    return list[list.length - 1][1];
+  }
+
+  /* ---------- drawing ---------- */
+  var dpr = 1, W = 1, H = 1, dirty = true, jS = 0, jT = 0, tS = 0, last = 0, frameN = 0, clock = 0, running = false, cut = 1, intro = 0;
+  var probe = document.createElement('canvas'), pctx = probe.getContext('2d', { willReadFrequently: true }); probe.width = 48; probe.height = 27;
+  var flakes = [], canRead = true;
+  function cover(im, c, cw, ch, fx, zoom) {
+    var iw = im.naturalWidth, ih = im.naturalHeight, s = Math.max(cw / iw, ch / ih) * (zoom || 1), sw = cw / s, sh = ch / s;
+    var sx = clamp(iw * fx - sw / 2, 0, iw - sw), sy = (ih - sh) / 2;
+    c.drawImage(im, sx, sy, sw, sh, 0, 0, cw, ch);
+  }
+  var endDrift = 0;
+  function draw(t) {
+    var f = clamp(t * FILM.fps, 0, N - 1), i0 = Math.floor(f), fr = f - i0;
+    var fx = portrait ? 0.5 : at(FILM.focus, t), endZoom = 1 + 0.04 * smooth(0, 9, endDrift);
+    /* neighbouring frames dissolve into each other while the film moves; at rest it always lands on one whole, sharp frame */
+    fr = fr * fr * (3 - 2 * fr);
+    fr = lerp(fr, Math.round(fr), 1 - smooth(0.0004, 0.004, Math.abs(jT - jS)));
+    var a = nearest(i0), b = nearest(Math.min(i0 + 1, N - 1));
+    if (a !== i0 || b !== i0 + 1) { a = nearest(Math.round(f)); if (a < 0) return false; ctx.globalAlpha = 1; cover(imgs[a], ctx, W, H, fx, endZoom); return true; }
+    ctx.globalAlpha = 1;
+    if (fr > 0.985) { cover(imgs[b], ctx, W, H, fx, endZoom); return true; }
+    cover(imgs[a], ctx, W, H, fx, endZoom);
+    if (fr > 0.015) { ctx.globalAlpha = fr; cover(imgs[b], ctx, W, H, fx, endZoom); ctx.globalAlpha = 1; }
+    return true;
+  }
+  function snow(dt, amt) {
+    var n = small ? 46 : 90, i, p;
+    while (flakes.length < n) flakes.push({ x: Math.random(), y: Math.random(), z: 0.3 + Math.random() * 0.7, r: Math.random() });
+    if (amt <= 0.01) return;
+    ctx.fillStyle = '#fff';
+    for (i = 0; i < flakes.length; i++) {
+      p = flakes[i];
+      p.x += dt * (0.10 + 0.22 * p.z); p.y += dt * (0.03 + 0.07 * p.z) + Math.sin(clock * 1.3 + p.r * 40) * 0.0006;
+      if (p.x > 1.05 || p.y > 1.05) { if (Math.random() < 0.6) { p.x = -0.05; p.y = Math.random(); } else { p.x = Math.random(); p.y = -0.05; } }
+      var rad = (0.6 + 2.2 * p.z * p.z) * dpr;
+      ctx.globalAlpha = (0.10 + 0.34 * p.z) * amt;
+      ctx.beginPath(); ctx.ellipse(p.x * W, p.y * H, rad * 2.2, rad, 0.28, 0, 6.2832); ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+  }
+
+  /* copy turns white over dark footage and ink over bright snow */
+  function contrast(s, t) {
+    if (!canRead) return;
+    var i = nearest(Math.round(t * FILM.fps)); if (i < 0) return;
+    try {
+      var PW = probe.width, PH = probe.height;
+      cover(imgs[i], pctx, PW, PH, portrait ? 0.5 : at(FILM.focus, t), 1);
+      var d = pctx.getImageData(0, 0, PW, PH).data;
+      var lum = function (x0, y0, x1, y1) {
+        var sum = 0, n = 0;
+        for (var y = Math.max(0, Math.floor(y0 * PH)); y < Math.min(PH, Math.ceil(y1 * PH)); y++) for (var x = Math.max(0, Math.floor(x0 * PW)); x < Math.min(PW, Math.ceil(x1 * PW)); x++) { var k = (y * PW + x) * 4; sum += d[k] * 0.2126 + d[k + 1] * 0.7152 + d[k + 2] * 0.0722; n++; }
+        return n ? sum / n / 255 : 0.3;
+      };
+      if (s.copy && !s.el.classList.contains('dark')) {
+        var r = s.copy.getBoundingClientRect(), L = lum(r.left / vw, r.top / vh, Math.min(r.right, r.left + vw * 0.5) / vw, r.bottom / vh), dark = s.copy.classList.contains('dark');
+        if (dark && L > 0.53) s.copy.classList.remove('dark'); else if (!dark && L < 0.43) s.copy.classList.add('dark');
+      }
+      var ink = function (cls, L) { var on = body.classList.contains(cls); if (!on && L > 0.55) body.classList.add(cls); else if (on && L < 0.45) body.classList.remove(cls); };
+      ink('nav-ink', lum(0, 0, 0.3, 0.14)); ink('hud-ink', lum(0, 0.9, 0.3, 1)); ink('rail-ink', lum(0.9, 0.32, 1, 0.68));
+    } catch (e) { canRead = false; }
+  }
+
+  var hudAlt = $('#hud-alt'), hudPct = $('#hud-pct'), pct = $('#load-pct'), bar = $('#load-bar');
+  var thread = $$('#thread > *'), beats = $$('#beats li'), fMissed = $('.f-missed'), fBooked = $('.f-booked'), rig = $('#rig'), uis = $$('.ui');
+  var mx = 0, my = 0, mxS = 0, myS = 0;
+
+  function resize() {
+    measure();
+    var wasPortrait = portrait; portrait = vw / vh < 0.8;
+    dpr = Math.min(window.devicePixelRatio || 1, small ? 2 : 1.5);
+    var k = Math.min(1, 2200 / (vw * dpr));
+    W = Math.round(vw * dpr * k); H = Math.round(vh * dpr * k);
+    if (canvas.width !== W || canvas.height !== H) { canvas.width = W; canvas.height = H; }
+    probe.width = 48; probe.height = Math.max(8, Math.round(48 * vh / vw));
+    fit(); measure(); buildKeys();
+    if (wasPortrait !== portrait || !tiers.length) resetFrames();
+    dirty = true;
+  }
+
+  function setOn(s, on) { if (s.on !== on) { s.on = on; s.el.classList.toggle('is-on', on); } }
+
+  function frame(now) {
+    if (running && !OPT.manual) requestAnimationFrame(frame);
+    var dt = last ? Math.min(0.1, (now - last) / 1000) : 0.016; last = now; clock += dt; frameN++;
+    intro = Math.min(1, intro + dt / 1.6);
+
+    jT = journey(window.scrollY);
+    if (cut) { jS = jT; cut = 0; } else { jS += (jT - jS) * (1 - Math.exp(-dt * 4.2)); if (Math.abs(jT - jS) < 0.0003) jS = jT; }
+    tS = filmTime(jS);
+    cur = Math.round(tS * FILM.fps);
+    endDrift = jT >= STAGES.length - 0.02 ? endDrift + dt : Math.max(0, endDrift - dt * 3);
+
+    var ti = Math.min(Math.floor(jT), STAGES.length - 1), tt = jT - ti, sNow = STAGES[ti];
+    STAGES.forEach(function (s) { setOn(s, s.i === ti && tt > s.win[0] && tt < s.win[1] && (s.i > 0 || intro > 0.2)); s.railEl.classList.toggle('on', s.i === ti); });
+
+    draw(tS); snow(dt, at(FILM.snow, tS)); warm(now);
+    if (frameN % 10 === 2) contrast(sNow, tS);
+    if (KEEP && frameN % 20 === 5) { prune(); pump(); }
+
+    if (frameN % 4 === 0) {
+      var si = Math.min(Math.floor(jS), STAGES.length - 1), a0 = FILM.stages[STAGES[si].id].alt, a1 = FILM.stages[STAGES[Math.min(si + 1, STAGES.length - 1)].id].alt;
+      hudAlt.textContent = fmt(lerp(a0, a1, smooth(0, 1, jS - si))) + ' m';
+      hudPct.textContent = Math.round(clamp(tS / FILM.dur, 0, 1) * 100) + '%';
+    }
+
+    if (!small) {
+      mxS += (mx - mxS) * (1 - Math.exp(-dt * 2.5)); myS += (my - myS) * (1 - Math.exp(-dt * 2.5));
+      for (var i = 0; i < uis.length; i++) { uis[i].style.setProperty('--px', (-mxS * 10).toFixed(1) + 'px'); uis[i].style.setProperty('--py', (-myS * 7).toFixed(1) + 'px'); }
+      rig.style.setProperty('--ry', (mxS * 5).toFixed(2) + 'deg'); rig.style.setProperty('--rx', (-myS * 4).toFixed(2) + 'deg');
+      rig.style.setProperty('--fx', (mxS * 9).toFixed(1) + 'px'); rig.style.setProperty('--fy', (myS * 6).toFixed(1) + 'px');
+    }
+
+    /* the system: the conversation plays out as you climb */
+    var sys = byId.system;
+    if (sys && ti === sys.i) {
+      var p = clamp((tt - sys.win[0] - 0.05) / (sys.win[1] - sys.win[0] - 0.14), 0, 1);
+      var nMsg = 2 + Math.round(Math.min(p / 0.86, 1) * (thread.length - 2));
+      for (var m = 0; m < thread.length; m++) thread[m].classList.toggle('on', m < nMsg);
+      var b = nMsg <= 2 ? 0 : nMsg <= 6 ? 1 : 2;
+      for (var q = 0; q < beats.length; q++) beats[q].classList.toggle('on', q === b);
+      fMissed.classList.toggle('on', nMsg < 7); fBooked.classList.toggle('on', nMsg >= thread.length);
+    }
+  }
+
+  /* start once the coarse pass and the opening frames are in */
+  resize();
+  var rs, lw = window.innerWidth, lh = window.innerHeight;
+  window.addEventListener('resize', function () {
+    if (window.innerWidth === lw && Math.abs(window.innerHeight - lh) < 150 && coarse) return;
+    lw = window.innerWidth; lh = window.innerHeight; clearTimeout(rs); rs = setTimeout(resize, 140);
+  });
+  window.addEventListener('pointermove', function (e) { if (e.pointerType !== 'touch') { mx = (e.clientX / vw) * 2 - 1; my = (e.clientY / vh) * 2 - 1; } }, { passive: true });
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { fit(); measure(); buildKeys(); });
+  document.addEventListener('visibilitychange', function () { last = 0; });
+
+  var need = Math.min(N, Math.ceil(N / 32) + 10), t0 = performance.now();
+  (function wait() {
+    var p = clamp(loadedCount / need, 0, 1);
+    pct.textContent = Math.round(p * 100) + '%'; bar.style.width = (p * 100) + '%';
+    var opening = nearest(Math.round(filmTime(journey(window.scrollY)) * FILM.fps)) >= 0;
+    if ((p >= 1 && opening) || (performance.now() - t0 > 12000 && opening)) {
+      running = true; jS = jT = journey(window.scrollY);
+      requestAnimationFrame(function (now) { frame(now); root.classList.remove('is-loading'); window.__cc.ready = true; });
+    } else if (performance.now() - t0 > 25000 && loadedCount === 0) fallback();
+    else setTimeout(wait, 80);
+  })();
+
+  window.__cc = {
+    ready: false,
+    jump: function (j) { measure(); var i = Math.min(Math.floor(j), STAGES.length - 1), s = STAGES[i], end = i < STAGES.length - 1 ? STAGES[i + 1].top : docMax(); window.scrollTo(0, s.top + (j - i) * (end - s.top)); cut = 1; intro = 1; },
+    tick: function (now) { frame(now == null ? performance.now() : now); },
+    info: function () { return { loaded: loadedCount, n: N, t: tS, portrait: portrait, keys: KEYS, have: st8[clamp(cur, 0, N - 1)] === 2 && st8[clamp(cur + 1, 0, N - 1)] === 2 }; }
+  };
+})();
+</script>
+</body>
+</html>
