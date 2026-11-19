@@ -223,7 +223,7 @@ body.nav-ink .w-light{opacity:0}
 .rail a.on i{width:30px;background:var(--red);opacity:1;height:2px}
 body.hud-ink .telemetry,body.rail-ink .rail{color:var(--ink)}
 .grain{position:fixed;inset:0;z-index:2;pointer-events:none;background:radial-gradient(ellipse at 50% 42%,transparent 52%,rgba(4,6,10,.46) 100%)}
-.grain::after{content:"";position:absolute;inset:-60px;background-size:160px 160px;opacity:.11;mix-blend-mode:overlay;animation:grain .7s steps(5) infinite}
+.grain::after{content:"";position:absolute;inset:-60px;background-size:160px 160px;display:none}
 @keyframes grain{0%{transform:translate(0,0)}20%{transform:translate(-22px,14px)}40%{transform:translate(18px,-26px)}60%{transform:translate(-30px,-8px)}80%{transform:translate(12px,24px)}100%{transform:translate(0,0)}}
 html:not(.is-3d) .grain{display:none}
 main{z-index:3}
